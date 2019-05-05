@@ -1,0 +1,68 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: bbd614b69e2b0741f8525f3de2d8a92f6ebaf72cd7c1969ec9cad4a4a205815e
+
+name:           test1
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/test1#readme>
+homepage:       https://github.com/githubuser/test1#readme
+bug-reports:    https://github.com/githubuser/test1/issues
+author:         Onur Rıdvanoğlu
+maintainer:     onurridvanoglu@gmail.com
+copyright:      2019 Onur Rıdvanoğlu
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/test1
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_test1
+  hs-source-dirs:
+      src
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , hspec
+  default-language: Haskell2010
+
+executable test1-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_test1
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , hspec
+    , test1
+  default-language: Haskell2010
+
+test-suite test1-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_test1
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , hspec
+    , test1
+  default-language: Haskell2010

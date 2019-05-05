@@ -1,0 +1,3 @@
+.stack-work/
+hangman-game.cabal
+*~

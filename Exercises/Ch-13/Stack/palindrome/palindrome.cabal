@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 536e51af0fc590d4e6893cc5e80e19bfdaad6b90ab7ece629285316a3f871285
+
+name:           palindrome
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/palindrome#readme>
+homepage:       https://github.com/githubuser/palindrome#readme
+bug-reports:    https://github.com/githubuser/palindrome/issues
+author:         Onur Rıdvanoğlu
+maintainer:     onurridvanoglu@gmail.com
+copyright:      2019 Onur Rıdvanoğlu
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/palindrome
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_palindrome
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable palindrome-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_palindrome
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , palindrome
+  default-language: Haskell2010
+
+test-suite palindrome-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_palindrome
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , palindrome
+  default-language: Haskell2010
