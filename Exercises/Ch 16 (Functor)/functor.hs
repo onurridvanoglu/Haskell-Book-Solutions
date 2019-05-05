@@ -14,4 +14,9 @@ instance Functor WhoCares where
     fmap _ WhatIsCalled = WhatIsCalled
     fmap f (Matter a) = Matter (f a)
 
+data Wrap f a = Wrap (f a) deriving (Eq, Show)
+
+instance Functor f => Functor (Wrap f) where
+    fmap f (Wrap fa) = Wrap (fmap f fa)
+
 
