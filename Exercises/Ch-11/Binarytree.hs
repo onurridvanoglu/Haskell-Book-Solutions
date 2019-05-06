@@ -4,6 +4,10 @@ data BinaryTree a =
     | Node (BinaryTree a) a (BinaryTree a)
     deriving (Eq, Ord, Show)
 
+instance Functor BinaryTree where
+    fmap _ Leaf = Leaf
+    fmap f (Node l a r) = Node (fmap f l) (f a) (fmap f r)
+
 insert :: Ord a => a -> BinaryTree a -> BinaryTree a
 insert b Leaf = Node Leaf b Leaf
 insert b (Node left a right)
