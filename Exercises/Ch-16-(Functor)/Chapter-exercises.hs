@@ -37,3 +37,12 @@ instance Functor (More a) where
     fmap f (L a b a') = L a (f b) a' 
     fmap f (R b a b') = R (f b) a (f b')
 
+-- Write Functor instances
+-- 1
+data Quant a b = Finance | Desk a | Bloor b deriving (Eq, Show)
+instance Functor (Quant a) where
+    fmap _ Finance = Finance
+    fmap f (Desk a) = Desk a
+    fmap f (Bloor b) = Bloor (f b)
+
+
