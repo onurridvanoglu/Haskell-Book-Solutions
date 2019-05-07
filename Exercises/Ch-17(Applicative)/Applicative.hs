@@ -50,7 +50,7 @@ newtype Identity a = Identity a deriving (Eq, Ord, Show)
 instance Functor Identity where 
     fmap f (Identity a) = Identity (f a)
 instance Applicative Identity where 
-    pure a = Identity a
+    pure = Identity
     (Identity f) <*> (Identity b) =  Identity (f b)
 
 -- Writing out Applicative instance for Constant
