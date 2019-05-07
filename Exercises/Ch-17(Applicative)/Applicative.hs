@@ -60,4 +60,36 @@ instance Functor (Constant a) where
 instance Monoid a => Applicative (Constant a) where
     pure _ = Constant mempty
     (Constant x) <*> (Constant y) = Constant $ mappend x y
+
+-- Maybe Applicative
+validateLength :: Int -> String -> Maybe String
+validateLength maxLen s = if (length s) > maxLen then Nothing else Just s
+
+newtype Name = Name String deriving (Eq, Show)
+newtype Adress = Adress String deriving (Eq, Show)
+
+mkName :: String -> Maybe Name
+mkName s = fmap Name $ validateLength 25 s
+
+mkAdress :: String -> Maybe Adress
+mkAdress a = fmap Adress $ validateLength 100 a
+
+data Person = Person Name Adress deriving (Eq, Show)
+
+mkPerson :: String -> String -> Maybe Person
+mkPerson n a = 
+    case mkName n of
+        Nothing -> Nothing
+        Just n' -> 
+            case mkAdress a of 
+                Nothing -> Nothing
+                Just a' -> 
+                    Just $ Person n' a' 
+
+mkPerson' :: String -> String -> Maybe Person
+mkPerson' n a = Person <$> mkName n <*> mkAdress a 
+
+
+
+
     
