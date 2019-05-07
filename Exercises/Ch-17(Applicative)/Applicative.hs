@@ -51,5 +51,5 @@ instance Functor Identity where
     fmap f (Identity a) = Identity (f a)
 instance Applicative Identity where 
     pure a = Identity a
-    (Identity f) <*> (Identity b) =  Identity (f a)
+    (Identity f) <*> (Identity b) =  Identity (f b)
 
