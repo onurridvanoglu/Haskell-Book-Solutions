@@ -44,3 +44,12 @@ y' = lookup 2 $ zip xs ys
 
 summed :: Maybe Integer
 summed = sum <$> ((,) <$> x' <*> y)
+
+-- Writing out Applicative instance for Identity 
+newtype Identity a = Identity a deriving (Eq, Ord, Show)
+instance Functor Identity where 
+    fmap f (Identity a) = Identity (f a)
+instance Applicative Identity where 
+    pure a = Identity a
+    (Identity f) <*> (Identity b) =  Identity (f a)
+
