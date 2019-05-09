@@ -1,10 +1,10 @@
 name:                instance2
 version:             0.1.0.0
-github:              "githubuser/instance2"
+github:              "https://github.com/onurridvanoglu"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2019 Author name here"
+author:              "Onur Rıdvanoğlu"
+maintainer:          "onurridvnanoglu@gmail.com.com"
+copyright:           "2019 Onur Rıdvanoğlu"
 
 extra-source-files:
 - README.md
@@ -21,6 +21,7 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- QuickCheck
 
 library:
   source-dirs: src
