@@ -17,5 +17,14 @@ instance (Semigroup a, Semigroup b, Monoid a, Monoid b) => Monoid (Two a b) wher
 instance Functor f => Functor (Two a) where
     fmap f (Two a b) = Two a (f b)
 
-instance Applicative
+instance Monoid a => Applicative (Two a) where
+    pure a = Two mempty a
+    (Two a f) <*> (Two a' b) = Two (a <> a') (f b)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+    arbitrary = do
+        a <- arbitrary
+        b <- arbitrary 
+        return $ Two a b
+
 
