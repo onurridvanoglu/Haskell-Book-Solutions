@@ -16,6 +16,7 @@ instance Functor (Three a b) where
     fmap f (Three a b c) = Three a b (f c)
 
 instance (Monoid a, Monoid b) => Applicative (Three a b) where
+    pure a = Three mempty mempty a
     (Three x y f) <*> (Three a b c) = Three (x <> a) (y <> b) (f c) 
 
 instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
