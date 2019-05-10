@@ -16,7 +16,7 @@ instance Functor (Two a) where
     fmap f (Two a b) = Two a (f b)
 
 instance Monoid a => Applicative (Two a) where
-    pure a = Two a a
+    pure a = Two mempty a
     (Two a f) <*> (Two a' b) = Two (a <> a') (f b)
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
