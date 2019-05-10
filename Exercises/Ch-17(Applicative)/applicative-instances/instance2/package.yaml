@@ -1,9 +1,9 @@
 name:                instance2
 version:             0.1.0.0
-github:              "https://github.com/onurridvanoglu"
+github:              "https://github.com/onurridvanoglu/Haskell-Book-Solutions"
 license:             BSD3
 author:              "Onur Rıdvanoğlu"
-maintainer:          "onurridvnanoglu@gmail.com.com"
+maintainer:          "onurridvanoglu@gmail.com"
 copyright:           "2019 Onur Rıdvanoğlu"
 
 extra-source-files:

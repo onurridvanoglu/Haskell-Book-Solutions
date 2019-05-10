@@ -1,10 +1,10 @@
 name:                instance6
 version:             0.1.0.0
-github:              "githubuser/instance6"
+github:              "https://github.com/onurridvanoglu/Haskell-Book-Solutions"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2019 Author name here"
+author:              "Onur Rıdvanoğlu"
+maintainer:          "onurridvanoglu@gmail.com"
+copyright:           "2019 Onur Rıdvanoğlu"
 
 extra-source-files:
 - README.md

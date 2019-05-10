@@ -1,6 +1,6 @@
 name:                instance1
 version:             0.1.0.0
-github:              "githubuser/instance1"
+github:              "https://github.com/onurridvanoglu/Haskell-Book-Solutions"
 license:             BSD3
 author:              "Onur Rıdvanoğlu"
 maintainer:          "onurridvanoglu@gmail.com"
