@@ -44,7 +44,18 @@ twoBinds = do
     putStrLn ("Hello thar ya facking: " ++ name ++ "who is: " ++ age ++ "years old.")
 
 twoBinds' :: IO () 
-twoBinds' = do
+twoBinds' = 
     putStrLn "What's ur name? " >> getLine >>= \name ->
         putStrLn "How old are you?" >> getLine >>= \age -> putStrLn ("hello thar ya facking " ++ name ++ "who is " ++ age ++  " years old")
+
+twoBinds'' :: IO () 
+twoBinds'' =
+    putStrLn "name pls:" >> 
+    getLine >>=
+        (\name ->
+            putStrLn "age pls:" >> getLine >>=
+            (\age ->
+                putStrLn ("y helo thar: " ++name++"whois:"
+                                          ++ age ++ " years old.")))
+
 
