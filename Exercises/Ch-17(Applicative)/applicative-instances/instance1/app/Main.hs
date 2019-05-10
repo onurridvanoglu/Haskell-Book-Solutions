@@ -2,8 +2,6 @@ module Main where
 
 import Control.Applicative
 import Test.QuickCheck
-import Test.QuickCheck.Checkers
-import Test.QuickCheck.Classes
 
 data Pair a = Pair a a deriving (Eq, Show)
 
