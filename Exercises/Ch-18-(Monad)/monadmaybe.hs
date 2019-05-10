@@ -17,7 +17,8 @@ weightCheck :: Cow -> Maybe Cow
 weightCheck c =
     let w = weight c 
         n = name c
-    in if n == "Bess" && w > 499 then Nothing
+    in if n == "Bess" && w > 499 
+        then Nothing
         else Just c
 mkSphericalCow :: String -> Int -> Int -> Maybe Cow 
 mkSphericalCow name' age' weight' =
