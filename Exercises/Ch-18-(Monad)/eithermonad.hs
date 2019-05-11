@@ -38,19 +38,19 @@ mkSoftware years coders = do
 data Sum a b = First a | Second b deriving (Eq, Show)
 
 instance Functor (Sum a) where
-    fmap f (First a) = First a
+    fmap _ (First a) = First a
     fmap f (Second b) = Second (f b)
 
 instance Monoid a => Applicative (Sum a) where
-    pure a = Second a
+    pure = Second 
     (First x) <*> (First a) = First (x <> a)
     (Second f) <*> (Second a) = Second (f a)
     (First a) <*> _ = First a
     _ <*> (First a) = First a
 
-instance Monad (Sum a) where
-    return = 
+instance Monoid a =>Monad (Sum a) where
+    return = pure
     (First a) >>= _ = First a
-    (Second a) >>= ? = ?
+    (Second a) >>= f = f a
 
 
