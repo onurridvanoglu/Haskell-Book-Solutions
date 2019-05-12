@@ -48,7 +48,7 @@ instance Monoid a => Applicative (Sum a) where
     (First a) <*> _ = First a
     _ <*> (First a) = First a
 
-instance Monoid a =>Monad (Sum a) where
+instance Monoid a => Monad (Sum a) where
     return = pure
     (First a) >>= _ = First a
     (Second a) >>= f = f a
