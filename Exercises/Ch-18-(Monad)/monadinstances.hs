@@ -67,3 +67,15 @@ instance Monad Identity where
     return = pure 
     (Identity a) >>= f = (f a)
     
+-- 4
+data List a = Nil | Cons a (List a)
+
+instance Semigroup a => Semigroup (List a) where
+    (Cons a a') <> (Cons b) = Cons a (a' <> b)
+    _ <> Nil = Nil
+    Nil <> _ = Nil
+
+instance Monoid a => Monoid (List a) where
+    mempty = Nil
+    mappend = (<>)
+
