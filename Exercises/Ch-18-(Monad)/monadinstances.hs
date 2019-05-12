@@ -16,4 +16,36 @@ instance Monad Nope where
     
 -- 2
 
+data PhbtEither b a = Lefty a | Righty b
+
+instance (Semigroup a, Semigroup b) => Semigroup (PhbtEither b a) where
+    (Righty a) <> (Righty b)= Righty (a <> b)
+    (Lefty a) <> (Lefty b) = Lefty (a <> b)
+    (Righty a) <> _ = Righty a
+    _ <> (Righty a) = Righty a
+    
+instance (Monoid a, Monoid b) => Monoid (PhbtEither b a) where
+    mappend = (<>)
+    mempty = Lefty mempty
+
+instance Functor (PhbtEither a) where
+    fmap f (Lefty a) = Lefty (f a)
+    fmap _ (Righty b) = Righty b
+
+instance Monoid a => Applicative (PhbtEither a) where
+    pure a = Lefty a
+    (Lefty f) <*> (Lefty b) = Lefty (f b)
+    (Righty a) <*> (Righty b) = Righty (a <> b)
+    (Righty a) <*> _ = Righty a
+    _ <*> (Righty a) = Righty a
+
+
+instance Monoid a => Monad (PhbtEither a) where
+    return = pure
+    (Righty a) >>= _ = Righty a
+    (Lefty a) >>= f = f a
+
+-- 3
+
+ 
 
