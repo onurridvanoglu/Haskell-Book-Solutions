@@ -47,5 +47,23 @@ instance Monoid a => Monad (PhbtEither a) where
 
 -- 3
 
- 
+data Identity a = Identity a deriving (Eq, Show, Ord)
 
+instance Semigroup a => Semigroup (Identity a) where
+    (Identity a) <> (Identity b) = Identity (a <> b)
+
+instance Monoid a => Monoid (Identity a) where
+    mempty = Identity mempty
+    mappend = (<>)
+
+instance Functor Identity where
+    fmap f (Identity a) = Identity (f a)
+
+instance Applicative Identity where
+    pure = Identity 
+    (Identity f) <*> (Identity a) = Identity (f a)
+
+instance Monad Identity where
+    return = pure 
+    (Identity a) >>= f = (f a)
+    
