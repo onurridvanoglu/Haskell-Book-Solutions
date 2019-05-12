@@ -52,5 +52,4 @@ instance Monoid a => Monad (Sum a) where
     return = pure
     (First a) >>= _ = First a
     (Second a) >>= f = f a
-
-
+    
