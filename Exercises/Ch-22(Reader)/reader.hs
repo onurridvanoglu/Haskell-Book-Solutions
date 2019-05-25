@@ -1,3 +1,4 @@
+{-# LANGUAGE InstanceSigs #-}
 
 import Control.Applicative
 import Data.Char
@@ -44,6 +45,9 @@ tupled = (,) <$> rev <*> cap
 
 newtype Reader r a = Reader { runReader :: r -> a}
 
+instance Functor (Reader r) where
+    fmap f (Reader ra) = Reader $ (f . ra)
+
 -- Exercise 
 
 ask :: Reader a a
@@ -67,3 +71,41 @@ data Dog =
           dogsName :: DogName
         , dogsAddress :: Address
     } deriving (Eq, Show)
+
+pers :: Person
+pers = Person (HumanName "Big Bird")
+              (DogName "Barkley")
+              (Address "Sesame Street")
+
+onur :: Person
+onur = Person (HumanName "Onur Ridvanoglu")
+               (DogName "Papu")
+               (Address "Austin")
+
+getDog :: Person -> Dog
+getDog p = Dog (dogName p) (address p)
+
+getDogR :: Person -> Dog
+getDogR = Dog <$> dogName <*> address
+
+getDogR' :: Person -> Dog
+getDogR' = liftA2 Dog dogName address
+
+-- Exercise 
+-- 1
+myLiftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
+myLiftA2 f a b = f <$> a <*> b
+
+-- 2
+asks :: (r -> a) -> Reader r a
+asks f = Reader (f . id)
+
+-- 3 (Write the Applicative instance for Reader)
+
+-- Monads of functions
+foo :: (Functor f, Num a) => f a -> f a
+foo r = fmap (+1) r
+
+bar :: Foldable f => t -> f a -> (t, Int)
+bar r t = (r, length t)
+
