@@ -41,3 +41,29 @@ fmapped = fmap rev cap
 
 tupled :: [Char] -> ([Char], [Char])
 tupled = (,) <$> rev <*> cap 
+
+newtype Reader r a = Reader { runReader :: r -> a}
+
+-- Exercise 
+
+ask :: Reader a a
+ask = Reader id
+
+-- Function applicative 
+newtype HumanName = HumanName String deriving (Eq, Show)
+newtype DogName = DogName String deriving (Eq, Show)
+newtype Address = Address String deriving (Eq, Show)
+-- To tidy up, we'll make two record types
+
+data Person = 
+    Person {
+          humanName :: HumanName
+        , dogName :: DogName
+        , address :: Address
+    } deriving (Eq, Show)
+
+data Dog = 
+    Dog {
+          dogsName :: DogName
+        , dogsAddress :: Address
+    } deriving (Eq, Show)
