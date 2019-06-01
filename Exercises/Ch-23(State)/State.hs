@@ -1,7 +1,10 @@
+{-# LANGUAGE InstanceSigs #-}
+
 import System.Random
 import Control.Applicative (liftA3)
 import Control.Monad (replicateM)
 import Control.Monad.Trans.State
+
 
 data Die = 
       DieOne 
@@ -87,3 +90,61 @@ rollsCountLogged' n g = (length shit, shit)
             | otherwise = 
                 let (die, nextGen) = randomR (1, 6) gen
                 in die : (goshit (sum + die) (count + 1) nextGen)
+
+-- Write State for yourself
+
+newtype Moi s a = Moi { runMoi :: s -> (a, s) }
+
+-- State Functor
+instance Functor (Moi s) where
+    fmap :: (a -> b) -> Moi s a -> Moi s b
+    fmap f (Moi g) = Moi $ \s -> let (a, s1) = g s
+                                 in (f a, s1)
+
+-- State Applicative 
+instance Applicative (Moi s) where
+    pure :: a -> Moi s a
+    pure a = Moi $ \s -> let (purea, s1) = (a, s)
+                         in (purea, s1)
+
+    (<*>) :: Moi s (a -> b) -> Moi s a -> Moi s b
+    (Moi f) <*> (Moi g) = Moi $ \s -> let (a, s1) = g s
+                                          (h, s2) = f s1
+                                      in (h a, s2)
+
+-- State Monad 
+instance Monad (Moi s) where
+    return = pure
+
+    (>>=) :: Moi s a -> (a -> Moi s b) -> Moi s b
+    (Moi f) >>= g = Moi $ \s -> let (a, s1) = f s
+                                in runMoi (g a) s1
+
+-- FizzBuzz
+
+fizzBuzz :: Integer -> String
+fizzBuzz n 
+        | mod n 15 == 0 = "FizzBuzz"
+        | mod n 5 == 0  = "Fizz"
+        | mod n 3 == 0  = "Buzz"
+        | otherwise     = show n
+        
+main'' :: IO ()
+main'' = mapM_ (putStrLn . fizzBuzz) [1..100]
+
+-- FizzBuzz with State
+fizzBuzzList' :: [Integer] -> [String]
+fizzBuzzList' list = execState (mapM_ addResult' list) []
+
+addResult' :: Integer -> State [String] ()
+addResult' n = do
+    xs <- get
+    let result = fizzBuzz n
+    put (result : xs)
+
+main' :: IO ()
+main' = mapM_ putStrLn $ reverse $ fizzBuzzList' [1..100]
+
+-- FizzBuzz Exercise
+fizzBuzzFromTo :: Integer -> Integer -> [String] 
+fizzBuzzFromTo a b = fizzBuzzList' $ enumFromThenTo b (b - 1) a
