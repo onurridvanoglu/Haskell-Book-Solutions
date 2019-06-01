@@ -41,3 +41,10 @@ testVirtious = do
     print $ parseString virtuousFraction mempty alsoBad
     print $ parseString virtuousFraction mempty shouldWork 
     print $ parseString virtuousFraction mempty shouldAlsoWork
+
+-- exercise
+parseInteger :: Parser Integer 
+parseInteger = do
+    int <- integer
+    _ <- eof
+    return int
