@@ -133,6 +133,7 @@ main'' :: IO ()
 main'' = mapM_ (putStrLn . fizzBuzz) [1..100]
 
 -- FizzBuzz with State
+{-
 fizzBuzzList' :: [Integer] -> [String]
 fizzBuzzList' list = execState (mapM_ addResult' list) []
 
@@ -148,3 +149,4 @@ main' = mapM_ putStrLn $ reverse $ fizzBuzzList' [1..100]
 -- FizzBuzz Exercise
 fizzBuzzFromTo :: Integer -> Integer -> [String] 
 fizzBuzzFromTo a b = fizzBuzzList' $ enumFromThenTo b (b - 1) a
+-}
