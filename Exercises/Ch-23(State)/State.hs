@@ -67,3 +67,23 @@ rollsToGetN n g = go 0 0 g
                 | otherwise =
                     let (die, nextGen) = randomR (1, 6) gen
                     in go (sum + die) (count + 1) nextGen
+
+-- 2
+rollsCountLogged :: Int -> StdGen -> (Int, [Die])
+rollsCountLogged n g = (length dice, dice)
+  where dice = map intToDie (rolls 0 0 g)
+        rolls :: Int -> Int -> StdGen -> [Int]
+        rolls dsum count gen
+          | dsum >= n   = []
+          | otherwise   = let (die, nextGen) = randomR (1, 6) gen
+                           in die : (rolls (dsum + die) (count + 1) nextGen)
+
+rollsCountLogged' :: Int -> StdGen -> (Int, [Die])
+rollsCountLogged' n g = (length shit, shit)
+    where shit = map intToDie (goshit 0 0 g)
+          goshit :: Int -> Int -> StdGen -> [Int]
+          goshit sum count gen
+            | sum >= n = []
+            | otherwise = 
+                let (die, nextGen) = randomR (1, 6) gen
+                in die : (goshit (sum + die) (count + 1) nextGen)
