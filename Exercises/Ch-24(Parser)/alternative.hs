@@ -67,3 +67,9 @@ main' = do
     print $ parseString parseFDs mempty y
     print $ parseString parseFDs mempty z
     print $ parseString parseFDs mempty g
+
+-- Token  
+p' :: Parser [Integer]
+p' = some $ do
+    i <- token digit
+    return (read [i])
