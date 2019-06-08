@@ -136,3 +136,6 @@ parsePhone = (try parsePhoneDashed)
          <|> (try parsePhonePara) 
          <|> (try parsePhoneNoSpace) 
          <|> (try parsePhoneSpace)
+
+testParser :: String -> Result PhoneNumber
+testParser = parseString parsePhone mempty
