@@ -86,6 +86,7 @@ parseDash = char '-'
 parseSpace :: Parser Char
 parseSpace = char ' '
 
+-- This is not working?
 parseUnwanted :: Parser Char
 parseUnwanted = (char '-') <|> (char ' ')
 
@@ -113,13 +114,11 @@ parsePhonePara = do
     lineno <- parseFourIntegers
     return $ PhoneNumber area exchange lineno
 
--- Why it doesnt work?
+-- Works now but why the older version is not working?
 parsePhoneSpace :: Parser PhoneNumber
 parsePhoneSpace = do
     area <- parseThreeIntegers
-    _ <- parseSpace
     exchange <- parseThreeIntegers
-    _ <- parseSpace
     lineno <- parseFourIntegers
     return $ PhoneNumber area exchange lineno
 
@@ -132,3 +131,8 @@ parsePhoneNoSpace = do
     return $ PhoneNumber (read area) (read exchange) (read lineno)
 
 -- How can i combine them all?
+parsePhone :: Parser PhoneNumber
+parsePhone = (try parsePhoneDashed) 
+         <|> (try parsePhonePara) 
+         <|> (try parsePhoneNoSpace) 
+         <|> (try parsePhoneSpace)
