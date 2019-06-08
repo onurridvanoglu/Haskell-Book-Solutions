@@ -60,7 +60,7 @@ type NumberingPlanArea = Integer -- AKA area code
 type Exchange = Integer
 type LineNumber = Integer
 
-data PhoneNumber = PhoneNumber NumberingPlanArea Exchange LineNumber deriving (Eq, Show, Read)
+data PhoneNumber = PhoneNumber NumberingPlanArea Exchange LineNumber deriving (Eq, Show)
 
 -- Writing a function that only parses three digit integers
 parseThreeIntegers :: Parser Integer
@@ -91,6 +91,8 @@ parseUnwanted :: Parser Char
 parseUnwanted = (char '-') <|> (char ' ')
 
 -- A function to neglate paranthesis in the area code
+-- (*>) :: f a -> f b -> f b 
+-- Sequence actions, discarding the value of the first argument.
 parseParanthesis :: Parser Integer
 parseParanthesis = char '(' *> parseThreeIntegers <* char ')'
 
@@ -104,7 +106,6 @@ parsePhoneDashed = do
     lineno <- parseFourIntegers
     return $ PhoneNumber area exchange lineno
 
--- Works!!
 parsePhonePara :: Parser PhoneNumber
 parsePhonePara = do
     area <- parseParanthesis
@@ -122,7 +123,9 @@ parsePhoneSpace = do
     lineno <- parseFourIntegers
     return $ PhoneNumber area exchange lineno
 
--- Works!!
+-- count :: Applicative m => Int -> m a -> m [a]
+-- count n p parses n occurrences of p in sequence. A list of results is returned.
+-- So using read functions give the type Integer
 parsePhoneNoSpace :: Parser PhoneNumber
 parsePhoneNoSpace = do
     area <- count 3 digit
@@ -130,12 +133,14 @@ parsePhoneNoSpace = do
     lineno <- count 4 digit
     return $ PhoneNumber (read area) (read exchange) (read lineno)
 
--- How can i combine them all?
+
 parsePhone :: Parser PhoneNumber
 parsePhone = (try parsePhoneDashed) 
          <|> (try parsePhonePara) 
          <|> (try parsePhoneNoSpace) 
          <|> (try parsePhoneSpace)
 
+-- data Result a = Error String | Success a
+-- result of running a parser
 testParser :: String -> Result PhoneNumber
 testParser = parseString parsePhone mempty
