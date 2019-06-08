@@ -4,7 +4,7 @@
 data Constant a b = Constant b deriving (Eq, Show)
 
 instance Foldable (Constant a) where
-    foldMap f (Constant a) = f a
+    foldMap _ (Constant a) = mempty
 
 -- 2 
 data Two a b = Two a b deriving (Eq, Show)
