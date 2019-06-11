@@ -21,14 +21,14 @@ parseDot = char '.'
 
 parseIP :: Parser IPAddress 
 parseIP = do
-    f <- parseInteger
+    first <- parseInteger
     _ <- parseDot
-    s <- parseInteger
+    second <- parseInteger
     _ <- parseDot
-    t <- parseInteger
+    third <- parseInteger
     _ <- parseDot
-    four <- parseInteger
-    return $ IPAddress . fromIntegral $ ((f * 256^3) + (s * 256^2) + (t * 256) + four)
+    fourth <- parseInteger
+    return $ IPAddress . fromIntegral $ ((first * 256^3) + (second * 256^2) + (third * 256) + fourth)
 
 testIP :: String -> Result IPAddress
 testIP = parseString parseIP mempty
