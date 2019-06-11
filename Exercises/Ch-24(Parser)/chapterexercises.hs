@@ -144,3 +144,4 @@ parsePhone = (try parsePhoneDashed)
 -- result of running a parser
 testParser :: String -> Result PhoneNumber
 testParser = parseString parsePhone mempty
+
