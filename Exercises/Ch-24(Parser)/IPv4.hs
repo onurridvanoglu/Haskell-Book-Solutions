@@ -2,7 +2,7 @@
 import Data.Word
 import Text.Trifecta
 
-data IPAddress = IPAddress Word32 deriving (Eq, Show, Ord)
+data IPAddress = IPAddress Word32 deriving (Eq, Ord)
 
 digitRange :: Integer -> Integer -> Parser Integer
 digitRange max min = do
