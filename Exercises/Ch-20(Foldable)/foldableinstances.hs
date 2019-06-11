@@ -10,14 +10,14 @@ instance Foldable (Constant a) where
 data Two a b = Two a b deriving (Eq, Show)
 
 instance Foldable (Two a) where
-    foldr f z (Two _ b) = f b z
+    foldr f acc (Two _ b) = f b acc
     foldMap f (Two _ b) = f b
 
 -- 3
 data Three a b c = Three a b c deriving (Eq, Show)
 
 instance Foldable (Three a b) where
-    foldr f z (Three _ _ c) = f c z
+    foldr f acc (Three _ _ c) = f c acc
     foldMap f (Three _ _ c) = f c
 
 -- 4
