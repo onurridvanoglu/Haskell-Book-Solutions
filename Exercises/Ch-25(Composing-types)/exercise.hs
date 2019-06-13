@@ -44,6 +44,12 @@ instance Bifunctor (SemiDrei a) where
 -- 6
 data Quadriceps a b c d = Quadriceps a b c d deriving (Eq, Show)
 
+instance Bifunctor (Quadriceps a b) where
+    bimap f g (Quadriceps a b c d) = Quadriceps a b (f c) (g d)
 
+-- 7
+data Either' a b = Lefty a | Righty b deriving (Eq, Show)
 
-
+instance Bifunctor Either' where
+    bimap f _ (Lefty a) = Lefty (f a)
+    bimap _ g (Righty a) = Righty (g a)
