@@ -1,3 +1,6 @@
+import Control.Monad
+
+newtype IdentityT f a = IdentityT { runIdentity :: f a} deriving (Eq, Show)
 -- MaybeT
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
@@ -84,3 +87,26 @@ instance (Monad m) => Monad (StateT s m) where
     (StateT sma) >>= f = StateT $ \s -> do
         (a, s1) <- sma s
         runStateT (f a) s1
+
+-- MonadTrans
+class MonadTrans t where
+    lift :: (Monad m) => m a -> t m a
+
+-- MonadTrans instances
+instance MonadTrans IdentityT where
+    lift = IdentityT
+
+instance MonadTrans MaybeT where
+    lift = MaybeT . liftM Just
+
+instance MonadTrans (ReaderT r) where
+    lift = ReaderT . const
+
+instance MonadTrans (EitherT e) where
+    lift = EitherT . liftM return
+
+instance MonadTrans (StateT s) where
+    lift m = StateT $ \s -> do
+        a <- m
+        return $ (a, s) 
+    
