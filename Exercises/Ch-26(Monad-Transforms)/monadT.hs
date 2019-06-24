@@ -47,4 +47,40 @@ swapEitherT (EitherT ema) = EitherT $ fmap swapEither ema
 
 -- 5
 eitherT :: Monad m => (a -> m c) -> (b -> m c) -> EitherT a m b -> m c
-eitherT f g (EitherT ema) = undefined
+eitherT fe ga (EitherT ema) = undefined
+
+-- ReaderT
+newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
+
+instance (Functor m) => Functor (ReaderT r m) where
+    fmap f (ReaderT rma) = ReaderT $ (fmap . fmap) f rma
+
+instance (Applicative m) => Applicative (ReaderT r m) where
+    pure = ReaderT . pure . pure
+    (ReaderT fmab) <*> (ReaderT rma) = ReaderT $ (<*>) <$> fmab <*> rma
+
+instance (Monad m) => Monad (ReaderT r m) where
+    return = pure
+    (ReaderT rma) >>= f = ReaderT $ \r -> do
+        a <- rma r
+        runReaderT (f a) r
+
+-- StateT
+newtype StateT s m a = StateT { runStateT :: s -> m (a, s) }
+
+instance (Functor m) => Functor (StateT s m) where
+    fmap f (StateT sma) = StateT $ (fmap . fmap) fa sma
+        where fa (a, s) = (f a, s)
+
+instance (Monad m) => Applicative (StateT s m) where
+    pure a = StateT $ \s -> pure (a, s)
+    (StateT fsma) <*> (StateT sma) = StateT $ \s -> do
+        (f, s1) <- fsma s
+        (a, s2) <- sma s1
+        return $ (f a, s2)
+
+instance (Monad m) => Monad (StateT s m) where
+    return = pure
+    (StateT sma) >>= f = StateT $ \s -> do
+        (a, s1) <- sma s
+        runStateT (f a) s1
