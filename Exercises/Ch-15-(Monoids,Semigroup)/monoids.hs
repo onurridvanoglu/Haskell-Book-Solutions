@@ -8,7 +8,8 @@ instance (Semigroup a, Monoid a) => Semigroup (Optional a) where
     (<>) _        _          = Nada
 
 instance (Semigroup a, Monoid a) => Monoid (Optional a) where
-    mempty  = Nada 
+    mempty  = Nada
+    mappend = (<>) 
     
 newtype First' a =
     First' { getFirst' :: Optional a }
@@ -21,6 +22,7 @@ instance Semigroup (First' a) where
 
 instance Monoid (First' a) where
     mempty = First' Nada
+    mappend = (<>)
 
 firstMappend :: First' a -> First' a -> First' a
 firstMappend = mappend
